@@ -6,8 +6,7 @@ export default function Document() {
       <Head>
         <title>Intent Shop</title>
         <meta name="description" content="Bozorboyev Javohir Portfolio Shop" />
-        <link rel="manifest" href="/manifest.json" />
-        <link rel="icon" href="/icon-192x192.png" />
+        <link rel="icon" href="favicon.ico" />
       </Head>
       <body>
         <Main />

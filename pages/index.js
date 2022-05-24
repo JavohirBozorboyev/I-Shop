@@ -1,25 +1,93 @@
-import Head from "next/head";
 import HomeSlider from "../layouts/HomePage/HomeSlider";
-import { Container, Grid } from "@mui/material";
+import { Button, Container, Grid, Typography } from "@mui/material";
 
-import HomeProductLinks from "../layouts/HomePage/HomeProductLinks";
+import OwlCarousel from "../components/Slider/OwlCarousel";
+import { Box } from "@mui/system";
+import Link from "next/link";
 
-function index() {
-  
+import Banner from "../img/banner.png";
+import Cart from "../components/Cart/Cart";
+
+function index({ data, data1 }) {
   return (
     <div>
-     
-
       <main>
+        <HomeSlider />
         <Container sx={{ pt: 1, pb: 8 }} maxWidth="xl">
-          <Grid container spacing={2} columns={{ xs: 4, sm: 12, md: 12, lg: 12, }}>
-            <Grid item xs={4} sm={4} md={4} lg={3}>
-              <HomeProductLinks />
-            </Grid>
-            <Grid item xs={4} sm={8} md={8} lg={9}>
-              <HomeSlider />
-            </Grid>
-          </Grid>
+          <Box sx={{ mt: 4 }}>
+            <Box
+              sx={{
+                background: "#fff",
+                borderRadius: "8px",
+                padding: "10px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                mb: 2,
+              }}
+            >
+              <Typography variant="body1">Popular</Typography>
+              <Link href="/category">
+                <a>
+                  <Button variant="contained">See More</Button>
+                </a>
+              </Link>
+            </Box>
+            {data.length == 0 ? (
+              <h1>Loading...</h1>
+            ) : (
+              <OwlCarousel data={data} />
+            )}
+          </Box>
+        </Container>
+        <div
+          style={{
+            background: `url(${Banner.src})`,
+            height: "400px",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            width: "100%",
+            marginBottom: "30px",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "left",
+            justifyContent: "center",
+          }}
+        >
+          <Container maxWidth="xl">
+            <Typography variant="h4" sx={{ color: "#fff", textAlign: "left" }}>
+              All Best Product Categories
+            </Typography>
+            <Typography
+              variant="h6"
+              sx={{ color: "#fff", textAlign: "left", mt: 4 }}
+            >
+              lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam
+              eos quia, doloremque, quam doloremque. Quasi, quisquam. Quasi,
+              quisquam.
+            </Typography>
+          </Container>
+        </div>
+        <Container maxWidth="xl" sx={{ mb: 8 }}>
+          <Box
+            sx={{
+              background: "#fff",
+              mb: 2,
+              padding: "10px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              borderRadius: "8px",
+            }}
+          >
+            <Typography variant="body1">All Product</Typography>
+            <Link href="/product">
+              <a>
+                <Button variant="contained">See More</Button>
+              </a>
+            </Link>
+          </Box>
+          <Cart data={data1.slice(0, 10)} />
         </Container>
       </main>
     </div>
@@ -27,3 +95,18 @@ function index() {
 }
 
 export default index;
+
+export async function getStaticProps() {
+  const res = await fetch(`https://fakestoreapi.com/products`);
+  const res1 = await fetch(`https://fakestoreapi.com/products`);
+  const data = await res.json();
+  const data1 = await res1.json();
+
+  return {
+    props: {
+      data,
+      data1,
+    },
+    revalidate: 1,
+  };
+}

@@ -6,6 +6,8 @@ import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import ShoppingCartRoundedIcon from "@mui/icons-material/ShoppingCartRounded";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useRouter } from "next/router";
 
 function BottomNav() {
@@ -31,7 +33,13 @@ function BottomNav() {
   return (
     <ThemeProvider theme={darkTheme}>
       <BottomNavigation
-        sx={{ width: "100%", position: "fixed", bottom: "0", display: `${matches==true ? "none": null}` }}
+        sx={{
+          width: "100%",
+          position: "fixed",
+          zIndex: "1000",
+          bottom: "0",
+          display: `${matches == true ? "none" : null}`,
+        }}
         value={value}
         onChange={handleChange}
       >
@@ -41,14 +49,19 @@ function BottomNav() {
           icon={<HomeRoundedIcon />}
         />
         <BottomNavigationAction
-          label="Search"
-          value="search"
-          icon={<SearchRoundedIcon />}
+          label="Favorite"
+          value="favorite"
+          icon={<FavoriteIcon />}
         />
         <BottomNavigationAction
           label="Shop Cart"
           value="pbox"
           icon={<ShoppingCartRoundedIcon />}
+        />
+        <BottomNavigationAction
+          label="Account"
+          value="account"
+          icon={<AccountCircleIcon />}
         />
       </BottomNavigation>
     </ThemeProvider>
